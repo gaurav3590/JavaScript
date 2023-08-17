@@ -1,0 +1,73 @@
+CREATE TABLE Teacher (
+ id SERIAL PRIMARY KEY,
+ name varchar,
+ phone varchar,
+ email varchar,
+ address varchar,
+ "isAdmin" boolean,
+ password varchar,
+ "createdAt" timestamp,
+ "updatedAt" timestamp
+);
+ 
+CREATE TABLE Student (
+ "id" SERIAL PRIMARY KEY,
+ "name" varchar,
+ "email" varchar,
+ "phone" varchar,
+ "address" varchar,
+ "parentName" varchar,
+ "createdAt" timestamp,
+ "updatedAt" timestamp
+);
+ 
+CREATE TABLE Subject (
+ "id" SERIAL PRIMARY KEY,
+ "name" varchar,
+ "standard" varchar,
+ "section" varchar,
+ "toc" varchar,
+ "createdAt" timestamp,
+ "updatedAt" timestamp
+);
+ 
+CREATE TABLE Session (
+ "id" SERIAL PRIMARY KEY,
+ "name" varchar,
+ "start" timestamp,
+ "duration" timestamp,
+ "subjectId" int,
+ "teacherId" int,
+ "createdAt" timestamp,
+ "updatedAt" timestamp
+);
+ 
+CREATE TABLE studentsubject (
+ id SERIAL PRIMARY KEY,
+ "subjectId" int,
+ "studentId" int,
+ "createdAt" timestamp,
+ "updatedAt" timestamp
+);
+ 
+CREATE TABLE teachersubject (
+ id SERIAL PRIMARY KEY,
+ "subjectId" int,
+ "teachertId" int,
+ "createdAt" timestamp,
+ "updatedAt" timestamp
+);
+ 
+ALTER TABLE session ADD FOREIGN KEY ("subjectId") REFERENCES subject (id);
+ 
+ALTER TABLE session ADD FOREIGN KEY ("teacherId") REFERENCES teacher (id);
+ 
+ALTER TABLE studentsubject ADD FOREIGN KEY ("subjectId") REFERENCES subject (id);
+ 
+ALTER TABLE studentsubject ADD FOREIGN KEY ("studentId") REFERENCES student (id);
+ 
+ALTER TABLE teachersubject ADD FOREIGN KEY ("subjectId") REFERENCES subject (id);
+ 
+ALTER TABLE teachersubject ADD FOREIGN KEY ("teachertId") REFERENCES teacher (id);
+
+

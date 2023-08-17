@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Hello Array</h1>
+	<script>
+		var words = ['one','two']; //object
+		var addWord = function(){
+			var word = document.getElementById('newWord').value;
+			document.getElementById('newWord').value = '';
+
+			words.push(word);
+			document.getElementById('result').innerHTML = JSON.stringify(words);
+		}
+
+	</script>
+	<input id="newWord" placeholder="Add words" type="" name="" value=""> <br/>
+
+	<input onclick="addWord()" type="button" name="" value="Add to Array"> <br/>
+	<label id="result"></label>
+</body>
+</html>

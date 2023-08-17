@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Validation Form</title>
+    <script>
+        function validateForm() {
+            var name = document.forms["myForm"]["name"].value;
+            var date = document.forms["myForm"]["date"].value;
+
+            if (name == "" || name.length < 3) {
+                alert("Name must be minimum three characters");
+                return false;
+            }
+
+            if (!isValidDate(date)) {
+                alert("Date must be a valid date");
+                return false;
+            }
+        }
+
+        function isValidDate(dateString) {
+            var pattern = /^\d{4}-\d{2}-\d{2}$/;
+            if (!pattern.test(dateString)) {
+                return false;
+            }
+            var date = new Date(dateString);
+            if (isNaN(date.getTime())) {
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    <form name="myForm" onsubmit="return validateForm()" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="date">Date:</label>
+        <input type="text" id="date" name="date" placeholder="YYYY-MM-DD" required><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+
+</html>

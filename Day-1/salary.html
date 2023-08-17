@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>JavaScript Training</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        console.log("hello html");
+        var salary = 1000;
+        salayIncrement = function () {
+            //20  means  1000 + (1000 * (20/100)) = 1200
+        };
+        addBonus = function () {
+            console.log(a * b);
+        };
+        minusLeavesAmount = function () {
+            console.log(a * b);
+        };
+    </script>
+    <h1>Salary Calculator</h1>
+    <form>
+        <label> Base Salary $1000</label><br /><br />
+        <input id="a" type="number" placeholder="increment percentage" name="" />
+        <br /><br />
+        <input id="b" type="number" placeholder="add bous " name="" />
+        <br /><br />
+        <input id="money" type="number" placeholder="minus salary" name="" />
+        <br /><br />
+        <input type="button" onclick="salayIncrement()" value="Increment" /> |
+        <input type="button" onclick="bonus()" value="Bonus" /> |
+        <input type="button" onclick="addMoney()" value="Leaves" /> | <br /><br />
+
+        Final Salary: <label id="output"></label>
+    </form>
+</body>
+
+</html>

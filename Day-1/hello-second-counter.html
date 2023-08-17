@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        console.log("Hello world... 123");
+        var print = function (msg) {
+            console.log(msg);
+        }
+        secondsCounter = function (caller, count) {
+            for (var i = 0; i < count; i++) {
+                print(caller + " " + i + " seconds are over.");
+            }
+        }
+    </script>
+    <h1> heading 1</h1>
+    <h7> heading 2</h7>
+    <form>
+        <input type="" name="" placeholder="username"></input> <br /><br />
+        <input type="" name="" placeholder="password" /> <br /><br />
+        <input type="button" value="B1" name="" onclick="secondsCounter('B1',20)">
+        <input type="button" value="B2" name="" onclick="secondsCounter('B2',10)">
+    </form>
+</body>
+
+</html>

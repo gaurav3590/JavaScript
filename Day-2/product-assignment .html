@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product-App</title>
+    <style>
+        h3 {
+            background-color: antiquewhite;
+            padding: 2px;
+            border-radius: 5px;
+            margin-right: 1400px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-weight: bolder;
+            text-align: center;
+        }
+
+        label {
+            display: inline-block;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            color: cadetblue;
+            width: auto;
+        }
+
+        input>id {
+            border-radius: 3px;
+            text-align: left;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        #addButton{
+            height:auto ;
+            width :5%;
+            background-color: antiquewhite;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-weight: bolder;
+            text-align: center;
+            border-radius: 5%;
+        }
+        #cancelButton{
+            height:auto ;
+            width :5%;
+            background-color: antiquewhite;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-weight: bolder;
+            text-align: center;
+            border-radius: 5%;
+        }
+        #addButton:hover{
+            background-color: aqua;
+            background-attachment: fixed;
+        }
+        #cancelButton:hover{
+            background-color: aqua;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+
+<body>
+
+    <body>
+        <h3>Product App</h3>
+        <form>
+            <label>Name:</label>
+            <input id="name" placeholder="Name" name="" value=""><br /><br />
+
+            <label>Company:</label>
+            <input id="company" placeholder="Company" name="" value=""><br /><br />
+
+            <label>Date:</label>
+            <input id="date" placeholder="Date" name="" value=""><br /><br />
+
+            <label>City:</label>
+            <input id="city" placeholder="City" name="" value=""><br /><br />
+            <label>Country:</label>
+            <input id="country" placeholder="Country" name="" value=""><br /><br />
+
+
+            <input type="button" id="addButton" name="" value="Add" onclick="addOrUpdateCustomer();"> 
+            <input type="button" id="cancelButton" name="" value="Cancel" onclick="resetForm();">
+        </form><br />
+        <hr /><br />
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>company</th>
+                    <th>date</th>
+                    <th>city</th>
+                    <th>Country</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody id="result">
+            </tbody>
+        </table><br /><br />
+
+
+        <script type="text/javascript">
+            var customers = [
+                { id: 1, name: 'Vivek', company: 'Amzon', date: '07/08/2015', city: "Ahmedabad", country: "India" },
+                { id: 2, name: 'Dev', company: 'Google', date: '12/07/2018', city: "Surat", country: "India" },
+                { id: 3, name: 'Ameer', company: 'Pyther', date: '03/11/2019', city: "Ahmedabad", country: "India" }
+            ];
+
+            if (localStorage.getItem("customers") != null) {
+                customers = JSON.parse(localStorage.getItem("customers"));
+            }
+            var selectedId = 0;
+
+            updateStorage = () => {
+                localStorage.setItem("customers", JSON.stringify(customers));
+            }
+            resetForm = function () {
+                document.getElementById('name').value = "";
+                document.getElementById('company').value = "";
+                document.getElementById('date').value = "";
+                document.getElementById('city').value = "";
+                document.getElementById('country').value = "";
+                document.getElementById('addButton').value = "Add";
+                selectedId = 0;
+            }
+            updateCustomer = function (id) {
+                var temp = customers.filter((item) => (item.id == id));
+                if (temp.length > 0) {
+                    let record = temp[0];
+                    selectedId = record.id;
+                    document.getElementById('name').value = record.name;
+                    document.getElementById('company').value = record.company;
+                    document.getElementById('date').value = record.date;
+                    document.getElementById('city').value = record.city;
+                    document.getElementById('country').value = record.country;
+                    document.getElementById('addButton').value = "Update";
+                }
+            }
+            addOrUpdateCustomer = function () {
+                var name = document.getElementById('name').value;
+                var company = document.getElementById('company').value;
+                var date = document.getElementById('date').value;
+                var city = document.getElementById('city').value;
+                var country = document.getElementById('country').value;
+
+                if (selectedId == 0) {
+                    var len = customers.length;
+                    if (len > 0) {
+                        let lastId = customers[len - 1].id
+                        var id = lastId + 1
+                    } else {
+                        var id = 1;
+                    }
+                    customers.push({ id, name, company, date, city, country });
+                } else {
+                    var id = selectedId;
+                    var array = customers.filter((item) => (item.id == id));
+                    array[0].name = name;
+                    array[0].company = company;
+                    array[0].city = city;
+                    array[0].date = date;
+                    array[0].country = country;
+                }
+                updateStorage();
+                displayCustomers();
+                resetForm();
+            }
+
+            deleteCustomer = function (id) {
+                customers = customers.filter((item) => (item.id != id));
+                updateStorage();
+                displayCustomers();
+            }
+            displayCustomers = function () {
+                console.log(customers.length);
+                const list = document.getElementById("result");
+                list.innerHTML = "";
+                for (var i = 0; i < customers.length; i++) {
+                    let id = customers[i].id;
+                    const newRecord = document.createElement("tr");
+
+                    const newId = document.createElement("td");
+                    newId.innerHTML = customers[i].id;
+
+                    const newName = document.createElement("td");
+                    newName.innerHTML = customers[i].name;
+
+                    const newcompany = document.createElement("td");
+                    newcompany.innerHTML = customers[i].company;
+
+                    const newdate = document.createElement("td");
+                    newdate.innerHTML = customers[i].date;
+
+                    const newcity = document.createElement("td");
+                    newcity.innerHTML = customers[i].city;
+                    const newcountry = document.createElement("td");
+                    newcountry.innerHTML = customers[i].country;
+
+                    newRecord.appendChild(newId);
+                    newRecord.appendChild(newName);
+                    newRecord.appendChild(newcompany);
+                    newRecord.appendChild(newdate);
+                    newRecord.appendChild(newcity);
+                    newRecord.appendChild(newcountry);
+
+                    const newDeleteButton = document.createElement("td");
+
+                    const newButton = document.createElement("BUTTON");
+                    newButton.innerHTML = 'delete';
+                    newButton.onclick = function (e) {
+                        e.preventDefault();
+                        console.log('delete :' + id);
+                        deleteCustomer(id);
+
+                    }
+                    newDeleteButton.appendChild(newButton);
+
+                    const newEditButton = document.createElement("td");
+                    const newEButton = document.createElement("BUTTON");
+                    newEButton.innerHTML = 'edit';
+                    newEButton.onclick = function (e) {
+                        e.preventDefault();
+                        console.log('edit :' + id);
+                        updateCustomer(id);
+
+                    }
+                    newEditButton.appendChild(newEButton);
+
+                    newRecord.appendChild(newEditButton);
+                    newRecord.appendChild(newDeleteButton);
+
+                    list.appendChild(newRecord);
+                }
+            }
+            displayCustomers();
+        </script>
+    </body>
+
+</html>

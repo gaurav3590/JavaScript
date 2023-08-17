@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1> Customer App</h1>
+    <script>
+        let customers = [
+            { id: 1, name: 'Vivek', email: 'vivek@abc.com', phone: '8989389333', address: "Singapore" },
+            { id: 2, name: 'Dev', email: 'dev@abc.com', phone: '866u389333', address: "India" },
+            { id: 3, name: 'Ameer', email: 'ameer@abc.com', phone: '877779333', address: "Asia" }
+        ]; 
+        let addWord = () => {
+            var name = document.getElementById('id').value;
+            document.getElementById('id').value = '';
+            var customer = { id: Date.now(), name: name }
+            customers.push(customer);
+            updateGUI();
+        }
+
+        var displayWords = function () {
+            //JSON.stringify(s);
+            const result = document.getElementById("result"); 
+            result.innerHTML = "";//make it blank
+            for (let i = 0; i < customers.length; i++) {
+                const id = document.createElement("div");
+                id.innerHTML = customers[i].name + " ";
+                result.appendChild(id);
+
+                const deleteButton = document.createElement("button");
+                deleteButton.innerHTML = "X"
+                deleteButton.onclick = function () {
+                    console.log(" Want to delete " + customers[i]);
+                    customers = customers.filter((item) => (item.id != customers[i].id));
+                    //customers = customers.filter(function(item){return (item != customers[i])});
+                    updateGUI();
+                }
+                id.appendChild(deleteButton);
+            }
+        }
+        let removeWord = () => {
+            let temp = [];
+            var word = document.getElementById('id').value;
+            if (word === "") {
+                words.pop();
+            } else {
+                customers = customers.filter(function (item) { return (item != word) });
+                //customers = customers.filter((item) => (item != word));
+
+                //customers = temp;
+                console.log("Assignment remove :" + word);
+            }
+
+            updateGUI();
+            //customers.shift();
+            //customers.unshift();
+        }
+        let updateGUI = () => {
+            displayWords();
+            //document.getElementById('result').innerHTML = words;
+        }
+
+    </script>
+    <input id="id" placeholder="Name" type="" name="" value=""> <br /> <br />
+    <input id="email" id="id"id="id" placeholder="Email" type="" value=""> <br /> <br />
+    <input id="phone" id="id" placeholder="Phone" type="" value=""> <br /> <br />
+    <input id="address" placeholder="Address" type="" value=""> <br /> <br />
+
+    <input onclick="addWord()" type="button" name="" value="Add"> |
+    <input onclick="removeWord()" type="button" name="" value="Remove"> |
+
+    <br /> <br />
+    <h4> LISTING</h4> <br />
+    <div id="result">
+        <table border="3px">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th></th>
+                <th></th>
+                
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript">
+        updateGUI();
+    </script>
+</body>
+
+</html>

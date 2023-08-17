@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD</title>
+</head>
+
+<body>
+    <h3>Customer App</h3>
+    <form>
+        <label>Name:</label>
+        <input id="name" placeholder="Name" name="" value=""><br /><br />
+
+        <label>Email:</label>
+        <input id="email" placeholder="Email" name="" value=""><br /><br />
+
+        <label>Phone:</label>
+        <input id="phone" placeholder="Phone" name="" value=""><br /><br />
+
+        <label>Address:</label>
+        <input id="address" placeholder="Address" name="" value=""><br /><br />
+
+        <input type="button" id="addButton" name="" value="Add" onclick="addOrUpdateCustomer();"> |
+        <input type="button" name="" value="Cancel" onclick="resetForm();">
+    </form><br />
+    <hr /><br />
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody id="result">
+        </tbody>
+    </table><br /><br />
+
+
+    <script type="text/javascript">
+        var customers = [
+            { id: 1, name: 'Vivek', email: 'vivek@abc.com', phone: '8989389333', address: "Singapore" },
+            { id: 2, name: 'Dev', email: 'dev@abc.com', phone: '866u389333', address: "India" },
+            { id: 3, name: 'Ameer', email: 'ameer@abc.com', phone: '877779333', address: "Asia" }
+        ];
+        var selectedId = 0; 
+        resetForm = function () {
+            document.getElementById('name').value = "";
+            document.getElementById('email').value = "";
+            document.getElementById('phone').value = "";
+            document.getElementById('address').value = "";
+            document.getElementById('addButton').value = "Add";
+            selectedId = 0; 
+        }
+        updateCustomer = function (id) {
+            var temp = customers.filter((item) => (item.id == id));
+            if (temp.length > 0) {
+                let record = temp[0];
+                selectedId = record.id; 
+                document.getElementById('name').value = record.name;
+                document.getElementById('email').value = record.email;
+                document.getElementById('phone').value = record.phone;
+                document.getElementById('address').value = record.address;
+                document.getElementById('addButton').value = "Update";
+            }
+        }
+        addOrUpdateCustomer = function () {
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var phone = document.getElementById('phone').value;
+            var address = document.getElementById('address').value;
+
+            if (selectedId == 0) {
+                var len = customers.length;
+                if (len > 0) {
+                    let lastId = customers[len - 1].id
+                    var id = lastId + 1
+                } else {
+                    var id = 1;
+                }
+                customers.push({ id, name, email, phone, address });
+            } else {
+                var id = selectedId; 
+                var array = customers.filter((item) => (item.id == id));
+                array[0].name = name;
+                array[0].email = email;
+                array[0].address = address;
+                array[0].phone = phone;
+            }
+            displayCustomers();
+            resetForm();
+        }
+
+        deleteCustomer = function (id) {
+            customers = customers.filter((item) => (item.id != id));
+            displayCustomers();
+        }
+        displayCustomers = function () {
+            //JSON.stringify(s);
+            console.log(customers.length);
+            const list = document.getElementById("result"); //result is the list
+            list.innerHTML = "";
+            for (var i = 0; i < customers.length; i++) {
+                let id = customers[i].id;
+                const newRecord = document.createElement("tr");
+
+                const newId = document.createElement("td");
+                newId.innerHTML = customers[i].id;
+
+                const newName = document.createElement("td");
+                newName.innerHTML = customers[i].name;
+
+                const newEmail = document.createElement("td");
+                newEmail.innerHTML = customers[i].email;
+
+                const newPhone = document.createElement("td");
+                newPhone.innerHTML = customers[i].phone;
+
+                const newAddress = document.createElement("td");
+                newAddress.innerHTML = customers[i].address;
+
+                newRecord.appendChild(newId);
+                newRecord.appendChild(newName);
+                newRecord.appendChild(newEmail);
+                newRecord.appendChild(newPhone);
+                newRecord.appendChild(newAddress);
+
+                const newDeleteButton = document.createElement("td");
+
+                const newButton = document.createElement("BUTTON");
+                newButton.innerHTML = 'delete';
+                newButton.onclick = function (e) {
+                    //avoid default behaviour to post form data
+                    e.preventDefault();
+                    console.log('delete :' + id);
+                    deleteCustomer(id);
+
+                }
+                newDeleteButton.appendChild(newButton);
+
+                const newEditButton = document.createElement("td");
+                const newEButton = document.createElement("BUTTON");
+                newEButton.innerHTML = 'edit';
+                newEButton.onclick = function (e) {
+                    //avoid default behaviour to post form data
+                    e.preventDefault();
+                    console.log('edit :' + id);
+                    updateCustomer(id);
+
+                }
+                newEditButton.appendChild(newEButton);
+
+                newRecord.appendChild(newEditButton);
+                newRecord.appendChild(newDeleteButton);
+
+                list.appendChild(newRecord);
+            }
+        }
+        displayCustomers();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+</head>
+
+<body>
+    <h1> Hello Array</h1>
+    <script>
+        let words = ['one', 'two', 'three', 'four']; //object
+        let addWord = () => {
+            var word = document.getElementById('newWord').value;
+            document.getElementById('newWord').value = '';
+
+            words.push(word);
+            updateGUI();
+        }
+
+        var displayWords = function () {
+            //JSON.stringify(s);
+            const result = document.getElementById("result"); //result is the list
+            result.innerHTML = "";//make it blank
+            for (let i = 0; i < words.length; i++) {
+                const newWord = document.createElement("div");
+                newWord.innerHTML = words[i] + " ";
+                result.appendChild(newWord);
+
+                const deleteButton = document.createElement("button");
+                deleteButton.innerHTML = "X"
+                deleteButton.onclick = function () {
+                    console.log(" Want to delete " + words[i]);
+                }
+                newWord.appendChild(deleteButton);
+            }
+        }
+        let removeWord = () => {
+            //how js works
+            let temp = [];
+            var word = document.getElementById('newWord').value;
+            if (word === "") {
+                words.pop();
+            } else {
+                words = words.filter(function (item) { return (item != word) });
+                //words = words.filter((item) => (item != word));
+
+                //words = temp;
+                console.log("Assignment remove :" + word);
+            }
+
+            updateGUI();
+            //words.shift();
+            //words.unshift();
+        }
+        let updateGUI = () => {
+            displayWords();
+            //document.getElementById('result').innerHTML = words;
+        }
+
+    </script>
+    <input id="newWord" placeholder="Add words" type="" name="" value=""> <br /> <br />
+
+    <input onclick="addWord()" type="button" name="" value="Add"> |
+    <input onclick="removeWord()" type="button" name="" value="Remove"> |
+
+    <br /> <br />
+    <h4> LISTING</h4> <br />
+    <div id="result"></div>
+    <script type="text/javascript">
+        updateGUI();
+    </script>
+
+</body>
+
+</html>

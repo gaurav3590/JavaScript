@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<title>JavaScript Training</title>
+</head>
+	<body>
+		<script type="text/javascript">
+			console.log("hello html");
+			sum = function () {
+				var a = parseInt(document.getElementById('a').value);
+					if(isNaN(a)){ a =0;}
+				var b = parseInt(document.getElementById('b').value);
+					if(isNaN(b)){ b =0; }
+				document.getElementById('output').innerHTML= a+b;
+			}
+			mul = function (a,b) {
+				console.log(a*b);
+			//	return a*b;
+			}
+
+		</script>
+		<h1>Maths </h1>
+		<form>
+			<input id="a" type="number" placeholder="put a here" name="" /> <br/><br/>
+			<input id="b" type="number" placeholder="put b here" name="" /> <br/><br/>
+			<input type="button" onclick="sum()" value="SUM"> |  
+			<input type="button" onclick="mul(7,8)" value="MUL"> |  
+			<input onclick="mul(7,8)"> mul</button> | <br/><br/>
+			Output | <label id="output">8989</label>
+		</form>	
+	</body>
+</html>

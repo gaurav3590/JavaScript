@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add-Remove-Array</title>
+</head>
+<body>
+    <form>
+        Add Value: <input id="box1" name="" value="33"><br /><br />
+        <div id="result"></div> <br /><br />
+        <label id="details">
+        </label> <br /><br />
+        <input type="button" name="" value="Add Value" onclick="addArray();"> |
+        <input type="button" name="" value="Delete" onclick="deleteWord();"> |
+        <input type="button" name="" value="Show All Values" onclick="showArray();">
+    </form>
+    <script type="text/javascript">
+        var array = ["One", "Two", "Three", "Ameer", "Vivek", "Faizan"];
+        addArray = function () {
+            var val1 = document.getElementById('box1').value;
+            document.getElementById('box1').value = "";
+            array.push(val1);
+            console.log(array.length);
+            showArray();
+        }
+        deleteWord = function (word) {
+            var tempArray = [];
+            //var val1 = document.getElementById('box1').value;
+            array.map(function (value) {
+                if (value != word) {
+                    tempArray.push(value);
+                }
+            })
+            array = tempArray;
+            showArray();
+            //console.log("delete "+val1 +" from array");
+            //document.getElementById('result').innerHTML = JSON.stringify(array);
+        }
+        showArray = function () {
+            //JSON.stringify(s);
+            console.log(array.length);
+            console.log(JSON.stringify(array));
+            const list = document.getElementById("result"); //result is the list
+            list.innerHTML = "";
+            for (var i = 0; i < array.length; i++) {
+                let word = array[i];
+                const newDiv = document.createElement("div");
+                let newContent = document.createTextNode(word + " ");
+                // add the text node to the newly created div
+                newDiv.appendChild(newContent);
+                const newButton = document.createElement("BUTTON");
+                newButton.innerHTML = 'delete';
+                newButton.onclick = function (e) {
+                    //avoid default behaviour to post form data
+                    e.preventDefault();
+                    console.log('delete :' + word);
+                    deleteWord(word);
+                }
+                newDiv.appendChild(newButton);
+                list.appendChild(newDiv);
+            }
+        }
+        showArray();
+    </script>
+</body>
+</html>
