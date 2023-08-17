@@ -9,7 +9,6 @@
       crossorigin="anonymous"
     ></script>
   </head>
-
   <body>
     <script type="text/javascript">
       let doLogin = function () {
@@ -34,13 +33,16 @@
         });
       };
     </script>
-    <form class="login-form">
-      <h2>Login Form</h2>
-      <label for="username">Username:</label>
-      <input type="Username" placeholder="Username" />
-      <label for="password">Password:</label>
-      <input type="password" placeholder="Password" />
-      <button type="submit" onclick="doLogin()">submit</button>
-    </form>
+    <h1><%= title %></h1>
+    <input id="username" type="" placeholder="username" name="" /> <br /><br />
+    <input id="password" type="password" placeholder="password" name="" />
+    <br /><br />
+    <input
+      type="button"
+      placeholder="username"
+      name=""
+      onclick="doLogin()"
+      value="login"
+    />
   </body>
 </html>

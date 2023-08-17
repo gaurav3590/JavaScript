@@ -20,14 +20,4 @@ router.post('/authenticate', function (req, res, next) {
   }
 });
 
-router.post('/authenticate', function(req, res, next) {
-	console.log(req.body);
-	if(req.body.username == req.body.password && req.body.username != undefined){
-		req.session.user = req.body.username;
-		res.send({result:"success", msg:"user successful login."});
-	}else{
-		res.send({result:"fail", msg:"Incorrect username or password."});
-	}
-});
-
 module.exports = router;
