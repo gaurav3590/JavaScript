@@ -1,11 +1,9 @@
 var service = {};
 
 var customers = [
-	{ id: '1', name: 'Gaurav', email: 'gaurav.k@pyther.com', phone: '9924875063' ,address:'Gandhinagar,India'},
-	{ id: '2', name: 'Keyur', email: 'keyurgajera@gmail.com', phone: '7877456230' ,address:'Delhi,India'},
-	{ id: '3', name: 'Neej', email: 'neejgajera@outlook.com', phone: '7885523012',address:'mumbai,India'},
-	{ id: '4', name: 'Hardik', email: 'hardikpanshuriya@gmail.com', phone: '9632145870' ,address:'Kolkata,India'},
-	{ id: '5', name: 'Raj', email: 'rajgajipara@gmail.com', phone: '9922758674' ,address:'London,UK'},
+	{ id: '1', name: 'Vivek', email: 'vivek@gmail.com', address: 'Ahmedabad, India', phone: '9724232340' },
+	{ id: '2', name: 'Samridh', email: 'samdrih@gmail.com', address: 'Bengaluru, India', phone: '9724237840' },
+	{ id: '3', name: 'Mahi', email: 'Mahi@pyther.com', address: 'Delhi, India', phone: '9728937840' }
 ];
 
 service.getCustomers = function (customer) {

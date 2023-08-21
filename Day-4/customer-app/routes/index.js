@@ -8,9 +8,11 @@ router.get('/', function (req, res, next) {
   res.redirect('/login');
 });
 
-router.get('/login', function (req, res, next) {
-  res.render('login', { title: 'Customer App' });
+router.get('/login', function(req, res, next) {
+  delete(req.session.user);
+  res.render('login', { title: 'Login' });
 });
+
 
 router.get('/dashboard', function (req, res, next) {
   res.render('index', { title: 'Dashboard' });

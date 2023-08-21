@@ -24,62 +24,78 @@ service.getCustomers = function () {
     })
 }
 
-service.addCustomer = function (customer, callback) {
-    pool.getConnection(function (err, connection) {
-        if (err) { console.log(err); callback({ result: "fail" }); return; }
-        connection.query("INSERT INTO customer set ? ", customer, function (err, results) {
-            if (err) {
-                console.log("Error Selecting : %s ", err);
-                callback({ result: "fail" });
-            } else {
-                callback({ result: "success" });
-            }
+service.addCustomer = function (customer) {
+    return new Promise((resolve, reject) => {
+        //promise inside
+        pool.getConnection(function (err, connection) {
+            if (err) { console.log(err); resolve({ result: "fail" }); return; }
+            connection.query("INSERT INTO customer set ? ", customer, function (err, results) {
+                if (err) {
+                    console.log("Error Selecting : %s ", err);
+                    resolve({ result: "fail" });
+                } else {
+                    resolve({ result: "success" });
+                }
+            });
         });
-    });
+        //promise inside ends
+    })
 };
 
-service.deleteCustomer = function (id, callback) {
-    var sql = "delete FROM customer where id='" + id + "'";
-    pool.getConnection(function (err, connection) {
-        if (err) { console.log(err); callback({ result: "fail" }); return; }
-        // make the query
-        connection.query(sql, function (err, results) {
-            connection.release();
-            if (err) { console.log(err); callback({ result: "fail" }); return; }
-            callback({ result: "success" });
+service.deleteCustomer = function ({ id }) {
+    return new Promise((resolve, reject) => {
+        //promise inside
+        var sql = "delete FROM customer where id='" + id + "'";
+        pool.getConnection(function (err, connection) {
+            if (err) { console.log(err); resolve({ result: "fail" }); return; }
+            // make the query
+            connection.query(sql, function (err, results) {
+                connection.release();
+                if (err) { console.log(err); resolve({ result: "fail" }); return; }
+                resolve({ result: "success" });
+            });
         });
+        //promise inside ends
     });
 };
-service.getCustomerById = function (id, callback) {
-    var record = {};
-    var sql = "SELECT * FROM customer where id='" + id + "'";
-    console.log("sql:" + sql);
-    pool.getConnection(function (err, connection) {
-        if (err) { console.log(err); callback({}); return; }
-        // make the query
-        connection.query(sql, function (err, results) {
-            connection.release();
-            if (err) { console.log(err); callback({}); return; }
-            if (results.length == 0) {
-                callback(record);
-            }
-            callback(results[0]);
+service.getCustomerById = function (id) {
+    return new Promise((resolve, reject) => {
+        //promise inside
+        var record = {};
+        var sql = "SELECT * FROM customer where id='" + id + "'";
+        console.log("sql:" + sql);
+        pool.getConnection(function (err, connection) {
+            if (err) { console.log(err); resolve({}); return; }
+            // make the query
+            connection.query(sql, function (err, results) {
+                connection.release();
+                if (err) { console.log(err); resolve({}); return; }
+                if (results.length == 0) {
+                    resolve(record);
+                }
+                resolve(results[0]);
+            });
         });
+        //promise inside ends
     });
 
 };
-service.updateCustomer = function (customer, callback) {
-    pool.getConnection(function (err, connection) {
-        if (err) { console.log(err); callback({ result: "fail" }); return; }
-        connection.query("UPDATE customer set ? WHERE id = ? ", [customer, customer.id], function (err, results) {
-            if (err) {
-                console.log("Error Selecting : %s ", err);
-                callback({ result: "fail" });
-            } else {
-                callback({ result: "success" });
-            }
+service.updateCustomer = function (customer) {
+    return new Promise((resolve, reject) => {
+        //promise inside
+        pool.getConnection(function (err, connection) {
+            if (err) { console.log(err); resolve({ result: "fail" }); return; }
+            connection.query("UPDATE customer set ? WHERE id = ? ", [customer, customer.id], function (err, results) {
+                if (err) {
+                    console.log("Error Selecting : %s ", err);
+                    resolve({ result: "fail" });
+                } else {
+                    resolve({ result: "success" });
+                }
+            });
         });
     });
+    //promise inside ends
 };
 
 service.getCustomersBySearch = function (field, text) {

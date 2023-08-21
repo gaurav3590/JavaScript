@@ -1,107 +1,92 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-  <title>
-    <%= title %>
-  </title>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-</head>
-
-<body>
-  <script type="text/javascript">
-    let doEdit = function (id) {
-      location = "/customer/edit/" + id;
-    };
-    let changePage = function (newLocation) {
-      location = "/" + newLocation;
-    };
-    let doDelete = function (id) {
-      $.ajax({
-        type: "DELETE",
-        url: "/api/customer",
-        data: { id }, //
-        success: function (data) {
-          if (data.result == "ok") {
-            location = "/customer";
-          } else {
-            alert(data.msg);
-          }
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      let doEdit = function (id) {
+        location = "/customer/edit/" + id;
+      };
+      let changePage = function (newLocation) {
+        location = "/" + newLocation;
+      };
+      let doDelete = function (id) {
+        $.ajax({
+          type: "DELETE",
+          url: "/api/customer",
+          data: { id }, //
+          success: function (data) {
+            if (data.result == "ok") {
+              location = "/customer";
+            } else {
+              alert(data.msg);
+            }
+          },
+        });
+      };
+      let doSearch = function () {
+        var searchText = $("#searchText").val();
+        var selectField = $("#select").val();
+        if (searchText == "") {
+          location = "/customer";
+        } else {
+          location = "/customer/" + selectField + "/" + searchText;
         }
-      });
-    };
-    let doSearch = function () {
-      var searchText = $("#searchText").val();
-      var selectField = $("#select").val();
-      if (searchText == "") {
-        location = "/customer";
-      } else {
-        location = "/customer/" + selectField + "/" + searchText;
-      }
-    };
-  </script>
-  <h1>
-    <%= title %>
-  </h1>
-  <hr />
-  <button onclick="changePage('dashboard')">Dashboard</button> |
-  <button onclick="changePage('customer')">Customers</button> |
-  <button onclick="changePage('customer')">Products</button> |
-  <button onclick="changePage('about')">About</button> |
-  <button onclick="changePage('login')">Logout</button>
+      };
+    </script>
+    <h1><%= title %></h1>
+    <hr />
+    <button onclick="changePage('dashboard')">Dashboard</button> |
+    <button onclick="changePage('customer')">Customers</button> |
+    <button onclick="changePage('customer')">Products</button> |
+    <button onclick="changePage('about')">About</button> |
+    <button onclick="changePage('login')">Logout</button> | <%= name %>
 
-  <hr />
-  <button onclick="changePage('customer/add')">Add Customer</button> |
-  <input id="searchText" type="text" name="" placeholder="search text">
-  <select id="select">
-    <option value="id">Id</option>
-    <option value="name">Name</option>
-    <option value="email">Email</option>
-    <option value="address">Address</option>
-    <option value="phone">Phone</option>
-  </select>
-  <button onclick="doSearch()">Search</button><br /><br />
-  <div class="page-data">
-    <div class="data-table">
-      <table border="1" cellpadding="7" cellspacing="7">
-        <tr>
-          <th width="20px">Id</th>
-          <th width="250px">Name</th>
-          <th width="220px">Email</th>
-          <th width="100px">Phone</th>
-          <th width="300px">Address</th>
-          <th>Edit</th>
-          <th>Delete</th>
-        </tr>
-        <% if(data.length){for(var i=0;i < data.length;i++) { %>
+    <hr />
+    <button onclick="changePage('customer/add')">Add Customer</button> |
+    <input id="searchText" type="text" name="" placeholder="search text" />
+    <select id="select">
+      <option value="id">Id</option>
+      <option value="name">Name</option>
+      <option value="email">Email</option>
+      <option value="address">Address</option>
+      <option value="phone">Phone</option>
+    </select>
+    <button onclick="doSearch()">Search</button><br /><br />
+    <div class="page-data">
+      <div class="data-table">
+        <table border="1" cellpadding="7" cellspacing="7">
           <tr>
-            <td>
-              <%=data[i].id%>
-            </td>
-            <td>
-              <%=data[i].name%>
-            </td>
-            <td>
-              <%=data[i].email%>
-            </td>
-            <td>
-              <%=data[i].phone%>
-            </td>
-            <td>
-              <%=data[i].address%>
-            </td>
+            <th width="20px">Id</th>
+            <th width="250px">Name</th>
+            <th width="220px">Email</th>
+            <th width="100px">Phone</th>
+            <th width="300px">Address</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+          <% if(data.length){for(var i = 0;i < data.length;i++) { %>
+          <tr>
+            <td><%=data[i].id%></td>
+            <td><%=data[i].name%></td>
+            <td><%=data[i].email%></td>
+            <td><%=data[i].phone%></td>
+            <td><%=data[i].address%></td>
             <td><button onclick="doEdit('<%=data[i].id%>');">Edit</button></td>
-            <td><button onclick="doDelete('<%=data[i].id %>');">Delete</button></td>
+            <td>
+              <button onclick="doDelete('<%=data[i].id %>');">Delete</button>
+            </td>
           </tr>
           <% } }else{ %>
-            <tr>
-              <td colspan="7">No customers</td>
-            </tr>
-            <% } %>
-      </table>
+          <tr>
+            <td colspan="7">No customers</td>
+          </tr>
+          <% } %>
+        </table>
+      </div>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>

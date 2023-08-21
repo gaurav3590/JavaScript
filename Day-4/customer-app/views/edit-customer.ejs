@@ -1,57 +1,86 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      changePage = function (newLocation) {
+        location = "/" + newLocation;
+      };
+      updateCustomer = function () {
+        var customer = {};
+        customer.id = $("#id").val();
+        customer.name = $("#name").val();
+        customer.email = $("#email").val();
+        customer.phone = $("#phone").val();
+        customer.address = $("#address").val();
 
-<head>
-  <title>
-    <%= title %>
-  </title>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-</head>
+        $.ajax({
+          type: "PUT",
+          url: "/api/customer",
+          data: customer,
+          success: function (data) {
+            if (data.result == "ok") {
+              location = "/customer";
+            } else {
+              alert(data.msg);
+            }
+          },
+        });
+      };
+    </script>
+    <h1><%= title %></h1>
+    <hr />
+    <button onclick="changePage('dashboard')">Dashboard</button> |
+    <button onclick="changePage('customer')">Customers</button> |
+    <button onclick="changePage('aboutus')">Aboutus</button> |
+    <button onclick="changePage('login')">Logout</button>
+    <hr />
 
-<body>
-  <script type="text/javascript">
-    chnagePage = function (newLocation) {
-      location = "/" + newLocation;
-    };
-    updateCustomer = function () {
-      var customer = {};
-      customer.id = $("#id").val();
-      customer.name = $("#name").val();
-      customer.email = $("#email").val();
-      customer.phone = $("#phone").val();
-      customer.address = $("#address").val();
-
-      $.ajax({
-        type: "PUT",
-        url: "/api/customer",
-        data: customer,
-        success: function (data) {
-          if (data.result == "ok") {
-            location = "/customer";
-          } else {
-            alert(data.msg);
-          }
-        }
-      });
-    }
-  </script>
-  <h1>
-    <%= title %>
-  </h1>
-  <hr />
-  <button onclick="chnagePage('dashboard')">Dashboard</button> |
-  <button onclick="chnagePage('customer')">Customers</button> |
-  <button onclick="chnagePage('aboutus')">Aboutus</button> |
-  <button onclick="chnagePage('login')">Logout</button>
-  <hr />
-
-  <input id="id" type="text" name="" placeholder="id" value="<%= customer.id %>" readonly><br /><br />
-  <input id="name" type="text" name="" placeholder="name" value="<%= customer.name%>"><br /><br />
-  <input id="email" type="text" name="" placeholder="email" value="<%= customer.email %>"><br /><br />
-  <input id="phone" type="text" name="" placeholder="phone" value="<%= customer.phone %>"><br /><br />
-  <input id="address" type="text" name="" placeholder="address" value="<%= customer.address %>"><br /><br />
-  <input type="button" name="" onclick="updateCustomer()" value="update Customer"><br /><br />
-</body>
-
+    <input
+      id="id"
+      type="text"
+      name=""
+      placeholder="id"
+      value="<%= customer.id %>"
+      readonly
+    /><br /><br />
+    <input
+      id="name"
+      type="text"
+      name=""
+      placeholder="name"
+      value="<%= customer.name%>"
+    /><br /><br />
+    <input
+      id="email"
+      type="text"
+      name=""
+      placeholder="email"
+      value="<%= customer.email %>"
+    /><br /><br />
+    <input
+      id="phone"
+      type="text"
+      name=""
+      placeholder="phone"
+      value="<%= customer.phone %>"
+    /><br /><br />
+    <input
+      id="address"
+      type="text"
+      name=""
+      placeholder="address"
+      value="<%= customer.address %>"
+    /><br /><br />
+    <input
+      type="button"
+      name=""
+      onclick="updateCustomer()"
+      value="update Customer"
+    /><br /><br />
+  </body>
 </html>

@@ -1,56 +1,55 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      changePage = function (newLocation) {
+        location = "/" + newLocation;
+      };
+      addCustomer = function () {
+        // GUI side validation
+        var customer = {};
+        customer.name = $("#name").val();
+        customer.email = $("#email").val();
+        customer.phone = $("#phone").val();
+        customer.address = $("#address").val();
 
-<head>
-  <title>
-    <%= title %>
-  </title>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-</head>
-
-<body>
-  <script type="text/javascript">
-    changePage = function (newLocation) {
-      location = "/" + newLocation;
-    };
-    addCustomer = function () {
-      var customer = {};
-      customer.name = $("#name").val();
-      customer.email = $("#email").val();
-      customer.phone = $("#phone").val();
-      customer.address = $("#address").val();
-
-      $.ajax({
-        type: "POST",
-        url: "/api/customer",
-        data: customer,
-        success: function (data) {
-          if (data.result == "ok") {
-            location = "/customer";
-          } else {
-            alert(data.msg);
-          }
-        }
-      });
-    }
-  </script>
-  <h1>
-    <%= title %>
-  </h1>
-  <hr />
-  <button onclick="changePage('dashboard')">Dashboard</button> |
-  <button onclick="changePage('customer')">Customers</button> |
-  <button onclick="changePage('customer')">Products</button> |
-  <button onclick="changePage('about')">Aboutus</button> |
-  <button onclick="changePage('login')">Logout</button>
-  <hr />
-
-  <input id="name" type="text" name="" placeholder="name"><br /><br />
-  <input id="email" type="text" name="" placeholder="email"><br /><br />
-  <input id="phone" type="text" name="" placeholder="phone"><br /><br />
-  <input id="address" type="text" name="" placeholder="address"><br /><br />
-  <input type="button" name="" onclick="addCustomer()" value="Add Customer"><br /><br />
-</body>
-
+        $.ajax({
+          type: "POST",
+          url: "/api/customer",
+          data: customer,
+          success: function (data) {
+            if (data.result == "ok") {
+              location = "/customer";
+            } else {
+              alert(data.msg);
+            }
+          },
+        });
+      };
+    </script>
+    <h1><%= title %></h1>
+    <hr />
+    <button onclick="changePage('dashboard')">Dashboard</button> |
+    <button onclick="changePage('customer')">Customers</button> |
+    <button onclick="changePage('customer')">Products</button> |
+    <button onclick="changePage('about')">Aboutus</button> |
+    <button onclick="changePage('login')">Logout</button>
+    <hr />
+    <input id="name" type="text" name="" placeholder="name" /><br /><br />
+    <input id="email" type="text" name="" placeholder="email" /><br /><br />
+    <input id="phone" type="text" name="" placeholder="phone" /><br /><br />
+    <input id="address" type="text" name="" placeholder="address" /><br /><br />
+    <input type="file" value="1" name="" placeholder="address" /><br /><br />
+    <input
+      type="button"
+      name=""
+      onclick="addCustomer()"
+      value="Add Customer"
+    /><br /><br />
+  </body>
 </html>
