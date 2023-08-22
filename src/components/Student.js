@@ -7,8 +7,8 @@ export function StudentF({name,email}) {
   let onButtonClick = () =>{
     setCount (count+1);
     console.log(">> onButtonClick" + count); 
-    
   }
+  console.log('counter', counter)
   console.log("StudentF run");
   return (
     <div>

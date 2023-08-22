@@ -3,33 +3,43 @@ let customers = [
     { id: 2, name: "Fenil", email: 'fenil@abc.com', address: "Ahmedabad", phone: "8989001122" },
     { id: 3, name: "Mohit", email: 'mohit@abc.com', address: "Gandhinanagr", phone: "8090114477" }
 ];
+var saveLocalStorage = () => {
+    localStorage.setItem('customers', JSON.stringify(customers));
+}
+if (localStorage.getItem('customers') == null) {
+    saveLocalStorage();
+} else {
+    customers = JSON.parse(localStorage.getItem('customers'));
+}
 
 export const getCustomers = function (customer) {
     return customers;
 }
 
-export const getCustomerById = function (id) {
-    let customer = {}
-    for (var i = 0; i < customers.length; i++) {
-        if (id === customers[i].id) {
-            return customers[i];
-        }
+export var getCustomerById = (id) => {
+    var list = customers.filter((item) => (item.id === id));
+    if (list.length > 0) {
+        return list[0];
+    } else {
+        return {}
     }
-    return customer;
 }
 
 export const addCustomer = function (customer) {
     customer.id = Math.round(Math.random(289) * 1000000) + '';
     customers.push(customer);
+    saveLocalStorage();
 }
 
-export const updateCustomer = function (customer) {
-    for (var i = 0; i < customers.length; i++) {
-        if (customer.id === customers[i].id) {
-            customers[i] = customer;
-            return;
-        }
+export var updateCustomer = (customer) => {
+    var list = customers.filter((item) => (item.id === customer.id));
+    if (list.length > 0) {
+        list[0].name = customer.name;
+        list[0].email = customer.email;
+        list[0].phone = customer.phone;
+        list[0].address = customer.address;
     }
+    saveLocalStorage();
 }
 
 export const getCustomersBySearch = function (field, text) {
@@ -42,7 +52,7 @@ export const getCustomersBySearch = function (field, text) {
     }
     return tempCustomers;
 }
-export const deleteCustomer = function ({ id }) { //{id:7}
+export const deleteCustomer = function ({ id }) {
     var tempCustomers = [];
     for (var i = 0; i < customers.length; i++) {
         if (id !== customers[i].id) {
@@ -50,4 +60,5 @@ export const deleteCustomer = function ({ id }) { //{id:7}
         }
     }
     customers = tempCustomers;
+    saveLocalStorage();
 }

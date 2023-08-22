@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Menu from './Menu';
+import Button from "react-bootstrap/Button"
 import { useHistory, useParams } from 'react-router'
 import { getCustomers, getCustomerById, deleteCustomer, updateCustomer, addCustomer } from '../services/CustomerData';
 
@@ -19,7 +20,7 @@ export function CustomerAddEdit() {
                 console.log("useParams", params.id);
             }
         }
-    }, [])
+    }, [params])
     let reloadCustomer = () => {
         setState({ ...state, items: getCustomers() });
     }
@@ -30,7 +31,7 @@ export function CustomerAddEdit() {
     }
     let doEdit = (id) => {
         console.log("doEdit comp id:" + id);
-        let tempCustomers = state.items.filter((item) => (item.id == id));
+        let tempCustomers = state.items.filter((item) => (item.id === id));
         if (tempCustomers.length > 0) {
             var customer = tempCustomers[0];
             setState({ ...state, ...customer, bLabel: "Update" }); //id
@@ -48,9 +49,10 @@ export function CustomerAddEdit() {
         })
     }
     let handleChange = (e) => {
-        //setState({ ...state, name: "Vivek" });
         setState({ ...state, [e.target.name]: e.target.value });
     }
+    console.log(doDelete);
+    console.log(doEdit);
 
     let handleSubmit = (e) => {
         e.preventDefault();
@@ -64,15 +66,13 @@ export function CustomerAddEdit() {
             address: state.address,
             id: Date.now()
         };
-        if (state.id !== 0) { //update
+        if (state.id !== 0) { 
             newItem.id = state.id;
             updateCustomer(newItem);
-        } else { //add
+        } else { 
             addCustomer(newItem);
         }
         history.push("/customers");
-        //this.setState({}) //object pass to setState
-        //this.setState((oldState)=>{return {}}) //function pass to setState
     }
     return (
         <div>
@@ -94,12 +94,12 @@ export function CustomerAddEdit() {
                 onChange={handleChange}
                 value={state.address}
             /> <br /><br />
-            <button onClick={handleSubmit}>
+            <Button onClick={handleSubmit} className="btn btn-dark">
                 {state.bLabel}
-            </button> &nbsp;&nbsp;
-            <button onClick={handleCancel}>
+            </Button> &nbsp;&nbsp;
+            <Button onClick={handleCancel} className="btn btn-dark">
                 Cancel
-            </button>
+            </Button>
             <hr />
         </div>
     );

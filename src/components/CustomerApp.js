@@ -17,11 +17,10 @@ export function CustomerAppF() {
   }
   let doEdit = (id) => {
     console.log("doEdit comp id:" + id);
-    let tempCustomers = state.items.filter((item) => (item.id == id));
+    let tempCustomers = state.items.filter((item) => (item.id === id));
     if (tempCustomers.length > 0) {
       var customer = tempCustomers[0];
-      setState({ ...state, ...customer, bLabel: "Update" }); //id
-      //this.setState({name:customer.name,,bLabel:"Update"});
+      setState({ ...state, ...customer, bLabel: "Update" }); 
     }
   }
   let handleCancel = () => {
@@ -36,7 +35,6 @@ export function CustomerAppF() {
     })
   }
   let handleChange = (e) => {
-    //setState({ ...state, name: "Vivek" });
     setState({ ...state, [e.target.name]: e.target.value });
   }
 
@@ -52,7 +50,7 @@ export function CustomerAppF() {
       address: state.address,
       id: Date.now()
     };
-    if (state.id !== 0) { //update
+    if (state.id !== 0) { 
       newItem.id = state.id;
       updateCustomer(newItem);
       reloadCustomer();
@@ -65,7 +63,7 @@ export function CustomerAppF() {
         address: '',
         bLabel: 'Add'
       }));
-    } else { //add
+    } else { 
       addCustomer(newItem);
       reloadCustomer();
       setState((prevState) => ({
@@ -78,8 +76,6 @@ export function CustomerAppF() {
         bLabel: 'Add'
       }));
     }
-    //this.setState({}) //object pass to setState
-    //this.setState((oldState)=>{return {}}) //function pass to setState
   }
   return (
     <div>
@@ -114,6 +110,7 @@ export function CustomerAppF() {
     </div>
   );
 }
+console.log(getCustomerById);
 function CustomerList({ items, editCustomer, delCustomer }) {
   return (
     <div>

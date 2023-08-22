@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Menu from './Menu';
+import Table from "react-bootstrap/Table"
 import { getCustomers, getCustomerById, deleteCustomer, updateCustomer, addCustomer } from '../services/CustomerData';
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router';
 
 export function CustomerAppF() {
     const [state, setState] = useState({
@@ -86,10 +87,11 @@ export function CustomerAppF() {
         </div>
     );
 }
+console.log(getCustomerById);
 function CustomerList({ items, editCustomer, delCustomer }) {
     return (
         <div>
-            <table>
+            <Table className='Table'>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -113,7 +115,7 @@ function CustomerList({ items, editCustomer, delCustomer }) {
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </Table>
         </div>
     );
 }

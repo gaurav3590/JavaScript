@@ -11,3 +11,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+button{
+  border-radius: 20px;
+  color: white;
+  background-color: black;
+}
+.Navigation{
+  margin-left: 30px;
+  margin-right: 30px;
+}
+.Navigation:hover{
+  background-color: black;
+  color: aliceblue;
+  background-size: 100%;
+}
+table{
+  table-layout: auto;
+  border-radius: 20px;
+  border: 2px;
+}
